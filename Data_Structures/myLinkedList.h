@@ -8,8 +8,10 @@ public:
     ~myList();
     void push_back(const T& value);
     void pop_back();
+    void push_front(const T& value);
+    void pop_front();
     void insert(const T& value, int index);
-    void erase();
+    void erase(int index);
     int size();
     T& operator [] (int index);
     myList& operator = (const myList& other);
@@ -21,6 +23,7 @@ private:
     };
     Node* head;
 };
+
 
 
 
@@ -58,11 +61,44 @@ void myList<T>::push_back(const T &value) {
     (temp->next)->next = nullptr;
     temp->data = value;
     sz++;
+
+//    Node* temp = head;
+//    int c = sz - 1;
+//    while (c--) {
+//        temp = temp->next;
+//    }
+//    temp->next = new Node;
+//    (temp->next)->next = nullptr;
+//    temp->data = value;
+//    sz++;
 }
 
 template<typename T>
 void myList<T>::pop_back() {
+    Node* temp = head;
+    while (temp->next->next != nullptr) {
+        temp = temp->next;
+    }
+    delete temp->next;
+    sz--;
+}
 
+template<typename T>
+void myList<T>::pop_front() {
+    Node* temp = head;
+    head = head->next;
+    delete temp;
+    sz--;
+}
+
+template<typename T>
+void myList<T>::push_front(const T &value) {
+    Node* temp = head;
+    head = nullptr;
+    head = new Node;
+    head->data = value;
+    head->next = temp;
+    sz++;
 }
 
 template<typename T>
@@ -71,8 +107,19 @@ void myList<T>::insert(const T &value, int index) {
 }
 
 template<typename T>
-void myList<T>::erase() {
-
+void myList<T>::erase(int index) {
+    if (index == 0) {pop_front(); return;}
+    if (index >= sz-1) {pop_back(); return;}
+    int c = 0;
+    Node* temp = head;
+    while (c != index-1) {
+        temp = temp->next;
+        c++;
+    }
+    Node* del = temp->next;
+    temp->next = temp->next->next;
+    delete del;
+    sz--;
 }
 
 template<typename T>
@@ -94,7 +141,7 @@ T &myList<T>::operator[](int index) {
 
 template<typename T>
 int myList<T>::size() {
-    return 0;
+    return sz;
 }
 
 #endif //DSA_SAMPLES_MYLINKEDLIST_H
