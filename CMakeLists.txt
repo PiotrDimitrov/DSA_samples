@@ -3,4 +3,7 @@ project(DSA_samples)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(DSA_samples main.cpp)
+add_executable(DSA_samples main.cpp
+        header.h
+        Data_Structures/myVector.h
+)
