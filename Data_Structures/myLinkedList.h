@@ -1,0 +1,100 @@
+#ifndef DSA_SAMPLES_MYLINKEDLIST_H
+#define DSA_SAMPLES_MYLINKEDLIST_H
+
+template <typename T> class myList {
+public:
+    myList();
+    myList(T value);
+    ~myList();
+    void push_back(const T& value);
+    void pop_back();
+    void insert(const T& value, int index);
+    void erase();
+    int size();
+    T& operator [] (int index);
+    myList& operator = (const myList& other);
+private:
+    int sz;
+    class Node {
+        T data;
+        Node* next;
+    };
+    Node* head;
+};
+
+
+
+template<typename T>
+myList<T>::myList() {
+    sz = 1;
+    head = nullptr;
+}
+
+template<typename T>
+myList<T>::myList(T value) {
+    sz = 1;
+    head = new Node;
+    head->data = value;
+    head->next = nullptr;
+}
+
+template<typename T>
+myList<T>::~myList() {
+    Node* temp = head;
+    while (temp != nullptr) {
+        head = head->next;
+        delete temp;
+        temp = head;
+    }
+}
+
+template<typename T>
+void myList<T>::push_back(const T &value) {
+    Node* temp = head;
+    while (temp->next != nullptr) {
+        temp = temp->next;
+    }
+    temp->next = new Node;
+    (temp->next)->next = nullptr;
+    temp->data = value;
+    sz++;
+}
+
+template<typename T>
+void myList<T>::pop_back() {
+
+}
+
+template<typename T>
+void myList<T>::insert(const T &value, int index) {
+
+}
+
+template<typename T>
+void myList<T>::erase() {
+
+}
+
+template<typename T>
+myList<T> &myList<T>::operator=(const myList &other) {
+
+}
+
+template<typename T>
+T &myList<T>::operator[](int index) {
+    int c = 0;
+    if (index < 0) {index = 0;}
+    Node* temp = head;
+    while (index > c && temp != nullptr){
+        temp = temp->next;
+        c++;
+    }
+    return &(temp->data);
+}
+
+template<typename T>
+int myList<T>::size() {
+    return 0;
+}
+
+#endif //DSA_SAMPLES_MYLINKEDLIST_H

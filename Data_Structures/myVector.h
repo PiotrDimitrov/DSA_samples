@@ -12,7 +12,7 @@ class myVector {
         myVector(int n, T value);
         ~myVector();
         T& operator [] (int index);
-        T& operator = (myVector& other);
+        myVector& operator = (myVector& other);
         void push_back(T obj);
         void pop_back();
         int size();
@@ -34,7 +34,7 @@ class myVector {
 };
 
 template<typename T>
-T &myVector<T>::operator=(myVector &other) {
+myVector<T> &myVector<T>::operator=(myVector &other) {
     this->sz = other.sz;
     this->cap = other.cap;
     std::memcpy(this->array, other.array, sz);
