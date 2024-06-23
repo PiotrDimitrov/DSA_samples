@@ -13,6 +13,7 @@ public:
     void insert(const T& value, int index);
     void erase(int index);
     int size();
+    void clear();
     T& operator [] (int index);
     myList& operator = (const myList& other);
 private:
@@ -20,11 +21,20 @@ private:
     class Node {
         T data;
         Node* next;
+        friend class myList;
     };
     Node* head;
 };
 
-
+template<typename T>
+void myList<T>::clear() {
+    Node* temp = head;
+    while (temp != nullptr) {
+        head = head->next;
+        delete temp;
+        temp = head;
+    }
+}
 
 
 template<typename T>
@@ -103,7 +113,20 @@ void myList<T>::push_front(const T &value) {
 
 template<typename T>
 void myList<T>::insert(const T &value, int index) {
-
+    if (index == 0) {push_front(value); return;}
+    if (index >= sz-1) {push_back(value); return;}
+    int c = 0;
+    Node* temp = head;
+    while (c != index-1){
+        temp = temp->next;
+        c++;
+    }
+    Node* nextadr = temp->next;
+    temp->next = nullptr;
+    temp->next = new Node;
+    temp->next->next = nextadr;
+    temp->next->data = value;
+    sz++;
 }
 
 template<typename T>
@@ -124,7 +147,16 @@ void myList<T>::erase(int index) {
 
 template<typename T>
 myList<T> &myList<T>::operator=(const myList &other) {
-
+    Node* thisNode = head;
+    Node* otherNode = other.head;
+    while (thisNode != nullptr) {
+        thisNode->data = otherNode->data;
+        if (thisNode->next == nullptr){
+            thisNode->next = new Node;
+        }
+        otherNode = otherNode->next;
+        thisNode = thisNode->next;
+    }
 }
 
 template<typename T>
@@ -136,7 +168,7 @@ T &myList<T>::operator[](int index) {
         temp = temp->next;
         c++;
     }
-    return &(temp->data);
+    return (temp->data);
 }
 
 template<typename T>
