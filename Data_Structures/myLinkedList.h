@@ -21,10 +21,23 @@ private:
     class Node {
         T data;
         Node* next;
+        Node();
+        Node(T value);
         friend class myList;
     };
     Node* head;
 };
+
+template<typename T>
+myList<T>::Node::Node(T value) {
+next = nullptr;
+data = value;
+}
+
+template<typename T>
+myList<T>::Node::Node() {
+next = nullptr;
+}
 
 template<typename T>
 void myList<T>::clear() {
@@ -33,13 +46,14 @@ void myList<T>::clear() {
         head = head->next;
         delete temp;
         temp = head;
+        sz = 0;
     }
 }
 
 
 template<typename T>
 myList<T>::myList() {
-    sz = 1;
+    sz = 0;
     head = nullptr;
 }
 
@@ -63,24 +77,18 @@ myList<T>::~myList() {
 
 template<typename T>
 void myList<T>::push_back(const T &value) {
-    Node* temp = head;
-    while (temp->next != nullptr) {
-        temp = temp->next;
+    Node* newNode = new Node(value);
+    if (sz == 0){
+        head = newNode;
+    } else {
+        int c = sz - 1;
+        Node* temp = head;
+        while (c--) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
     }
-    temp->next = new Node;
-    (temp->next)->next = nullptr;
-    temp->data = value;
     sz++;
-
-//    Node* temp = head;
-//    int c = sz - 1;
-//    while (c--) {
-//        temp = temp->next;
-//    }
-//    temp->next = new Node;
-//    (temp->next)->next = nullptr;
-//    temp->data = value;
-//    sz++;
 }
 
 template<typename T>
