@@ -1,5 +1,6 @@
 #ifndef DSA_SAMPLES_MYLINKEDLIST_H
 #define DSA_SAMPLES_MYLINKEDLIST_H
+#include <iostream>
 
 template <typename T> class myList {
 public:
@@ -16,7 +17,9 @@ public:
     void clear();
     T& operator [] (int index);
     myList& operator = (const myList& other);
+    void print();
 private:
+public:
     int sz;
     class Node {
         T data;
@@ -27,6 +30,16 @@ private:
     };
     Node* head;
 };
+
+template<typename T>
+void myList<T>::print() {
+    Node* temp = head;
+    while (temp != nullptr){
+        std::cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+    std::cout << std::endl;
+}
 
 template<typename T>
 myList<T>::Node::Node(T value) {
@@ -46,8 +59,8 @@ void myList<T>::clear() {
         head = head->next;
         delete temp;
         temp = head;
-        sz = 0;
     }
+    sz = 0;
 }
 
 
@@ -93,16 +106,20 @@ void myList<T>::push_back(const T &value) {
 
 template<typename T>
 void myList<T>::pop_back() {
+    if (sz <= 0) { return;}
+    if (sz == 1) {delete head; head = nullptr; sz = 0; return;}
     Node* temp = head;
-    while (temp->next->next != nullptr) {
+    while (temp->next->next) {
         temp = temp->next;
     }
     delete temp->next;
+    temp->next = nullptr;
     sz--;
 }
 
 template<typename T>
 void myList<T>::pop_front() {
+    if (sz <= 0) { return;}
     Node* temp = head;
     head = head->next;
     delete temp;
@@ -112,44 +129,41 @@ void myList<T>::pop_front() {
 template<typename T>
 void myList<T>::push_front(const T &value) {
     Node* temp = head;
-    head = nullptr;
-    head = new Node;
-    head->data = value;
-    head->next = temp;
+    Node* newNode = new Node(value);
+    newNode->next = temp;
+    head = newNode;
     sz++;
 }
 
 template<typename T>
 void myList<T>::insert(const T &value, int index) {
-    if (index == 0) {push_front(value); return;}
+    if (index <= 0) {push_front(value); return;}
     if (index >= sz-1) {push_back(value); return;}
-    int c = 0;
+    Node* newNode = new Node(value);
     Node* temp = head;
-    while (c != index-1){
+    Node* prev;
+    while (index--){
+        prev = temp;
         temp = temp->next;
-        c++;
     }
-    Node* nextadr = temp->next;
-    temp->next = nullptr;
-    temp->next = new Node;
-    temp->next->next = nextadr;
-    temp->next->data = value;
+    newNode->next = temp;
+    prev->next = newNode;
     sz++;
 }
 
 template<typename T>
 void myList<T>::erase(int index) {
-    if (index == 0) {pop_front(); return;}
+    if (index <= 0) {pop_front(); return;}
     if (index >= sz-1) {pop_back(); return;}
-    int c = 0;
     Node* temp = head;
-    while (c != index-1) {
+    Node* prev; Node* nextN;
+    while (index--) {
+        prev = temp;
         temp = temp->next;
-        c++;
     }
-    Node* del = temp->next;
-    temp->next = temp->next->next;
-    delete del;
+    nextN = temp->next;
+    prev->next = nextN;
+    delete temp;
     sz--;
 }
 
@@ -169,14 +183,13 @@ myList<T> &myList<T>::operator=(const myList &other) {
 
 template<typename T>
 T &myList<T>::operator[](int index) {
-    int c = 0;
     if (index < 0) {index = 0;}
+    if (index > sz-1) {index = sz - 1;}
     Node* temp = head;
-    while (index > c && temp != nullptr){
+    while (index--){
         temp = temp->next;
-        c++;
     }
-    return (temp->data);
+    return temp->data;
 }
 
 template<typename T>
