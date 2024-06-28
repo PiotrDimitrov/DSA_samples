@@ -8,4 +8,5 @@ add_executable(DSA_samples main.cpp
         Data_Structures/myVector.h
         Data_Structures/myLinkedList.h
         Data_Structures/interfaces.h
+        Data_Structures/myLinkedListTwo.h
 )

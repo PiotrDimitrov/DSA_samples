@@ -1,11 +1,11 @@
 #ifndef DSA_SAMPLES_MYVECTOR_H
 #define DSA_SAMPLES_MYVECTOR_H
 #include <iostream>
-//#include <cstdint>
+#include "interfaces.h"
 #include <cstring>
 
 template <typename T>
-class myVector {
+class myVector : public container<T>{
     public:
         myVector();
         myVector(int n);
@@ -24,14 +24,22 @@ class myVector {
         int sz;
         int cap;
         T* array;
-        class iterator {
-        public:
-            T* ptr;
-            T& operator = (T* t);
-            void increment();
-            void decrement();
+        class vecIter : public iterator<T>{
+            T* advance () override;
+            T* retreat () override;
+
         };
 };
+
+template <typename T>
+T* myVector<T>::vecIter::advance()  {
+    return this->iterPtr + 1;
+}
+
+template <typename T>
+T* myVector<T>::vecIter::retreat() {
+    return this->iterPtr - 1;
+}
 
 template<typename T>
 myVector<T> &myVector<T>::operator=(myVector &other) {
@@ -128,20 +136,20 @@ void myVector<T>::reserve(int n) {
     cap = n;
 }
 
-template<typename T>
-T &myVector<T>::iterator::operator=(T *t) {
-    ptr = t;
-    return ptr;
-}
-
-template<typename T>
-void myVector<T>::iterator::increment() {
-    ptr += 1;
-}
-
-template<typename T>
-void myVector<T>::iterator::decrement() {
-    ptr -= 1;
-}
+//template<typename T>
+//T &myVector<T>::iterator::operator=(T *t) {
+//    ptr = t;
+//    return ptr;
+//}
+//
+//template<typename T>
+//void myVector<T>::iterator::increment() {
+//    ptr += 1;
+//}
+//
+//template<typename T>
+//void myVector<T>::iterator::decrement() {
+//    ptr -= 1;
+//}
 
 #endif //DSA_SAMPLES_MYVECTOR_H

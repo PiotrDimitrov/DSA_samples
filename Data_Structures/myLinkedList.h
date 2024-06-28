@@ -1,8 +1,9 @@
 #ifndef DSA_SAMPLES_MYLINKEDLIST_H
 #define DSA_SAMPLES_MYLINKEDLIST_H
 #include <iostream>
+#include "interfaces.h"
 
-template <typename T> class myList {
+template <typename T> class myList : public container<T>{
 public:
     myList();
     myList(T value);
@@ -19,7 +20,6 @@ public:
     myList& operator = (const myList& other);
     void print();
 private:
-public:
     int sz;
     class Node {
         T data;
