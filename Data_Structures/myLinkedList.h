@@ -3,7 +3,7 @@
 #include <iostream>
 #include "interfaces.h"
 
-template <typename T> class myList : public container<T>{
+template <typename T> class myList{
 public:
     myList();
     myList(T value);

@@ -18,14 +18,14 @@ public:
 template <typename T>
 class container {
 public:
-    virtual int size() = 0;
-    virtual void push_back() = 0;
-    virtual void pop_back() = 0;
-    virtual const T* begin() = 0;
-    virtual const T* end() = 0;
-    virtual void clear() = 0;
-    virtual T& operator [] (int index) = 0;
-    virtual container& operator = (const container& other) = 0;
+    int size();
+    void push_back();
+    void pop_back();
+    const T* begin();
+    const T* end();
+    void clear();
+    T& operator [] (int index);
+    container& operator = (const container& other);
 private:
     int sz;
 };

@@ -5,7 +5,7 @@
 #include <cstring>
 
 template <typename T>
-class myVector : public container<T>{
+class myVector{
     public:
         myVector();
         myVector(int n);
