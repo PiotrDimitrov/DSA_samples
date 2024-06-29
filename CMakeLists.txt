@@ -9,4 +9,6 @@ add_executable(DSA_samples main.cpp
         Data_Structures/myLinkedList.h
         Data_Structures/interfaces.h
         Data_Structures/myLinkedListTwo.h
+        Data_Structures/myStack.h
+        Data_Structures/myQueue.h
 )

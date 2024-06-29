@@ -36,7 +36,7 @@ private:
     Node* tail;
 };
 
-template<typename T>
+template<typename T> //TO DO
 myListTwo<T> &myListTwo<T>::operator=(const myListTwo &other) {
     this->clear;
     Node* step = other.head;
