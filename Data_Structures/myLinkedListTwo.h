@@ -38,7 +38,13 @@ private:
 
 template<typename T>
 myListTwo<T> &myListTwo<T>::operator=(const myListTwo &other) {
-
+    this->clear;
+    Node* step = other.head;
+    while (step != nullptr){
+        this->push_back(step->data);
+        step = step->next;
+    }
+    return *this;
 }
 
 
@@ -54,6 +60,7 @@ myListTwo<T>::myListTwo(T value) {
     Node* newNode = new Node(value);
     head = newNode;
     tail = newNode;
+    sz = 1;
 }
 
 template<typename T>
