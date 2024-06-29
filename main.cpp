@@ -14,9 +14,11 @@ myListTwo<int> lst;
     lst.print();
     //lst.show();
 
-    for (int i = 0; i < 3; i++) {lst.pop_back();}
+    for (int i = 0; i < 2; i++) {lst.pop_back();}
     lst.erase(1);
 
     lst.print();
-    std::cout << "sad]n\n";
+    std::cout << lst[1] << ' ' << lst[3] << std::endl;
+    lst[0] = 11;
+    lst.print();
 }

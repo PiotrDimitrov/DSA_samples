@@ -183,12 +183,33 @@ int myListTwo<T>::size() {
 
 template<typename T>
 void myListTwo<T>::clear() {
-
+    sz = 0;
+    Node* temp = head;
+    while (temp != nullptr){
+        head = head->next;
+        delete temp;
+        temp = head;
+    }
 }
 
 template<typename T>
 T &myListTwo<T>::operator[](int index) {
-
+    if (index < 0) {index = 0;}
+    if (index > sz-1) {index = sz - 1;}
+    Node* temp;
+    if (index < sz/2){
+        temp = head;
+        while (index--){
+            temp = temp->next;
+        }
+    } else {
+        temp = tail;
+        int c = sz - 1 - index;
+        while (c--){
+            temp = temp->prev;
+        }
+    }
+    return temp->data;
 }
 
 template<typename T>
