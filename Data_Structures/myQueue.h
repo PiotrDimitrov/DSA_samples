@@ -51,7 +51,7 @@ myQueue<T>::myQueue() {
 
 template<typename T>
 myQueue<T>::~myQueue() {
-
+    clear();
 }
 
 template<typename T>
@@ -106,6 +106,8 @@ void myQueue<T>::clear() {
         current = current->next;
         delete temp;
     }
+    head = nullptr;
+    tail = nullptr;
     sz = 0;
 }
 
