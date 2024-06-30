@@ -33,16 +33,6 @@ private:
     myPrQueue<T>& copy(const myPrQueue<T>& other);
 };
 
-//template<typename T>
-//bool myPrQueue<T>::defaultCompare(T a, T b) {
-//    return a > b;
-//}
-
-//template<typename T>
-//void myPrQueue<T>::setCompare(bool (*f)(T, T)) {
-//    compare = f;
-//}
-
 template<typename T>
 myPrQueue<T>::Node::Node() {
     next = nullptr;
