@@ -40,7 +40,10 @@ void myStack<T>::copyFrom(const myStack<T>& other) {
 
     while (currentOther != nullptr) {
         Node* newNode = new Node(currentOther->data);
-        newNode->prev = previousNewNode;
+        if (previousNewNode != nullptr){
+            previousNewNode->prev = newNode;
+            newNode->next = previousNewNode;
+        }
         previousNewNode = newNode;
 
         if (currentOther == other.tail) {

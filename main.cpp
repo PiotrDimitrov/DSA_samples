@@ -12,6 +12,8 @@ myStack<int> stk;
     stk.push(8);
 
 myStack<int> nstk;
+nstk.push(289);
+nstk.push(191);
 nstk = stk;
 
     stk.top() = 44;
@@ -22,8 +24,7 @@ nstk = stk;
     std::cout << std::endl;
 
     s = nstk.size();
-//    nstk.top() = 99;
-//    std::cout << s << std::endl;
+
     for (int i = 0; i < s; i++){
         std::cout << nstk.pop() << ' ';
     }
