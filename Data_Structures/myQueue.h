@@ -117,7 +117,7 @@ myQueue<T> &myQueue<T>::copy(const myQueue<T> &other) {
         sz = 0;
         tail = nullptr;
         head = nullptr;
-        return;
+        return *this;
     }
     Node* currentOther = other.head;
     while (currentOther != nullptr) {
@@ -126,6 +126,7 @@ myQueue<T> &myQueue<T>::copy(const myQueue<T> &other) {
     }
     sz = other.sz;
     last = other.last;
+    return *this;
 }
 
 template<typename T>

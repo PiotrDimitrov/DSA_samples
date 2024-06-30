@@ -2,35 +2,29 @@
 #include "header.h"
 #include <list>
 int main() {
-myStack<int> stk;
-    stk.push(4);
-    stk.push(2);
-    stk.push(5);
-    stk.push(11);
-    stk.push(7);
-    stk.push(1);
-    stk.push(8);
+myPrQueue<int> pq;
+    pq.push(4);
+    std::cout << "push norm\n";
+    pq.push(2);
+    std::cout << "push norm 1\n";
+    pq.push(5);
+    std::cout << "push norm 1\n";
+    pq.push(11);
+    std::cout << "push norm 1\n";
+    pq.push(7);
+    std::cout << "push norm 1\n";
+    pq.push(1);
+    std::cout << "push norm 1\n";
+    pq.push(8);
+    std::cout << "push norm all\n";
 
-myStack<int> nstk;
-nstk.push(289);
-nstk.push(191);
-nstk = stk;
-
-    stk.top() = 44;
-    int s = stk.size();
-    for (int i = 0; i < s; i++){
-        std::cout << stk.pop() << ' ';
+    int s = pq.size();
+    for (int i = 0; i < s-1; i++){
+        std::cout << pq.pop() << ' ';
     }
     std::cout << std::endl;
-
-    s = nstk.size();
-
-    for (int i = 0; i < s; i++){
-        std::cout << nstk.pop() << ' ';
-    }
-    std::cout << std::endl;
-
-
-
-
+    std::cout << pq.size() << std::endl;
+    std::cout << pq.pop() << std::endl;
+    std::cout << "sad";
+    return 0;
 }
