@@ -6,48 +6,77 @@ class myStack {
     class Node {
         Node();
         Node(T value);
-        Node* next;
         Node* prev;
+        Node* next;
         T data;
         friend class myStack;
     };
 public:
     myStack();
     ~myStack();
-    void pop();
+    T pop();
     void push(const T& value);
     int size();
     void clear();
-    myStack<T>& operator = (const myStack<T>& other);
+    myStack<T>& operator = (const myStack<T> &other);
     T& top();
 private:
-    Node* head;
+    T last;
     Node* tail;
     int sz;
+    void copyFrom(const myStack<T>& other);
 };
+
+template <typename T>
+void myStack<T>::copyFrom(const myStack<T>& other) {
+    if (other.tail == nullptr) {
+        tail = nullptr;
+        sz = 0;
+        return;
+    }
+
+    Node* currentOther = other.tail;
+    Node* previousNewNode = nullptr;
+
+    while (currentOther != nullptr) {
+        Node* newNode = new Node(currentOther->data);
+        newNode->prev = previousNewNode;
+        previousNewNode = newNode;
+
+        if (currentOther == other.tail) {
+            tail = newNode;
+        }
+
+        currentOther = currentOther->prev;
+    }
+
+    sz = other.sz;
+    last = other.last;
+}
 
 template<typename T>
 T &myStack<T>::top() {
+    if (sz == 0) {return last;}
     return tail->data;
 }
 
 template<typename T>
 myStack<T>::Node::Node() {
-    next = nullptr;
     prev = nullptr;
+    next = nullptr;
 }
 
 template<typename T>
 myStack<T>::Node::Node(T value) {
-    next = nullptr;
     prev = nullptr;
+    next = nullptr;
     data = value;
 }
+
 
 template<typename T>
 myStack<T>::myStack() {
     sz = 0;
-    head = nullptr;
     tail = nullptr;
 }
 
@@ -61,41 +90,36 @@ myStack<T>::~myStack() {
     }
 }
 
-template<typename T> //TO DO
-myStack<T> &myStack<T>::operator=(const myStack<T> &other) {
-    this->clear();
-    Node* temp = other.head;
-    Node* here = head;
-    while (temp != nullptr) {
-        Node* newNode = temp;
-        here = newNode;
-        here = here->next;
-        temp = temp->next;
+template <typename T>
+myStack<T>& myStack<T>::operator=(const myStack<T>& other) {
+    if (this != &other) {
+        clear();
+        copyFrom(other);
     }
     return *this;
 }
 
 template<typename T>
-void myStack<T>::pop() {
+T myStack<T>::pop() {
+    if (sz == 0) {return last;}
     Node* temp = tail;
     tail = tail->prev;
+    T t = temp->data;
     delete temp;
     sz--;
+    return t;
 }
 
 template<typename T>
 void myStack<T>::push(const T &value) {
     Node* newNode = new Node(value);
-    if (sz == 0) {
-        head = newNode;
-        tail = newNode;
-    } else {
-        Node* temp = tail;
-        newNode->prev = temp;
-        temp->next = newNode;
-        tail = newNode;
-    }
+    newNode->prev = tail;
+    tail = newNode;
     sz++;
+    if (tail->prev != nullptr){
+        Node* temp = tail->prev;
+        temp->next = tail;
+    }
 }
 
 template<typename T>
@@ -105,6 +129,7 @@ int myStack<T>::size() {
 
 template<typename T>
 void myStack<T>::clear() {
+    if (sz == 0) { return;}
     Node* temp = tail;
     while (tail != nullptr) {
         temp = tail;
