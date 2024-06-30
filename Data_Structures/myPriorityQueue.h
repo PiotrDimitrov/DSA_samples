@@ -14,9 +14,6 @@ class myPrQueue {
 public:
     myPrQueue();
     ~myPrQueue();
-//    bool (*compare)(T, T) = nullptr;
-//    bool defaultCompare(T a, T b);
-//    void setCompare(bool (*f)(T, T));
     void push(const T& value);
     void push(const T& value, bool (*comparePredicate)(T, T));
     T pop();
@@ -68,25 +65,28 @@ void myPrQueue<T>::push(const T &value) {
         return;
     }
     Node* temp = tail;
-    if (value <= tail->data){
+    if (value <= tail->data) {
         newNode->prev = tail;
         tail->next = newNode;
         tail = tail->next;
-        sz++; return;
+        sz++;
+        return;
     }
-    while (value > temp->data && temp->prev != nullptr){
+    while (value > temp->data && temp->prev != nullptr) {
         temp = temp->prev;
     }
-    if (temp->prev == nullptr && value > temp->data){
+    if (temp->prev == nullptr && value > temp->data) {
         newNode->next = head;
         head->prev = newNode;
         head = head->prev;
-        sz++; return;
+        sz++;
+        return;
     }
     Node* saveNext = temp->next;
     temp->next = newNode;
     newNode->prev = temp;
     newNode->next = saveNext;
+    saveNext->prev = newNode;
     sz++;
 }
 
@@ -97,32 +97,29 @@ void myPrQueue<T>::push(const T &value, bool (*comparePredicate)(T, T)) {
 
 template<typename T>
 T myPrQueue<T>::pop() {
-    if (sz == 0) {return last;}
-//    if (sz == 1) {
-//        T t = head->data;
-//        delete head;
-//        head = nullptr;
-//        tail = nullptr;
-//        sz--; return t;
-//    }
+    if (sz == 0) { throw std::out_of_range("Queue is empty"); }
     Node* temp = head;
     T t = temp->data;
-    if (head->next != nullptr){
-        head = head->next;
+    head = head->next;
+    if (head != nullptr) {
+        head->prev = nullptr;
+    } else {
+        tail = nullptr;
     }
     delete temp;
-    head->prev = nullptr;
     sz--;
     return t;
 }
 
 template<typename T>
 T &myPrQueue<T>::top() {
+    if (sz == 0) { throw std::out_of_range("Queue is empty"); }
     return head->data;
 }
 
 template<typename T>
 T &myPrQueue<T>::bot() {
+    if (sz == 0) { throw std::out_of_range("Queue is empty"); }
     return tail->data;
 }
 
@@ -146,12 +143,21 @@ void myPrQueue<T>::clear() {
 
 template<typename T>
 myPrQueue<T> &myPrQueue<T>::copy(const myPrQueue<T> &other) {
-
+    if (this != &other) {
+        clear();
+        Node* current = other.head;
+        while (current != nullptr) {
+            push(current->data);
+            current = current->next;
+        }
+    }
+    return *this;
 }
 
 template<typename T>
 myPrQueue<T> &myPrQueue<T>::operator=(const myPrQueue<T> &other) {
-
+    copy(other);
+    return *this;
 }
 
 #endif //DSA_SAMPLES_MYPRIORITYQUEUE_H

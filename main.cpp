@@ -19,12 +19,11 @@ myPrQueue<int> pq;
     std::cout << "push norm all\n";
 
     int s = pq.size();
-    for (int i = 0; i < s-1; i++){
+    for (int i = 0; i < s; i++){
         std::cout << pq.pop() << ' ';
     }
     std::cout << std::endl;
     std::cout << pq.size() << std::endl;
-    std::cout << pq.pop() << std::endl;
     std::cout << "sad";
     return 0;
 }
