@@ -12,4 +12,5 @@ add_executable(DSA_samples main.cpp
         Data_Structures/myStack.h
         Data_Structures/myQueue.h
         Data_Structures/myPriorityQueue.h
+        Data_Structures/myBinaryTree.h
 )
