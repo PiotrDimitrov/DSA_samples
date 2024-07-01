@@ -1,6 +1,6 @@
 #ifndef DSA_SAMPLES_MYPRIORITYQUEUE_H
 #define DSA_SAMPLES_MYPRIORITYQUEUE_H
-
+#include <functional>
 template <typename T>
 class myPrQueue {
     class Node {
@@ -92,7 +92,40 @@ void myPrQueue<T>::push(const T &value) {
 
 template<typename T>
 void myPrQueue<T>::push(const T &value, bool (*comparePredicate)(T, T)) {
-
+    Node* newNode = new Node(value);
+    if (comparePredicate == nullptr){
+        comparePredicate =  [](T a, T b){return a > b;};
+    }
+    if (sz == 0) {
+        head = newNode;
+        tail = newNode;
+        sz = 1;
+        return;
+    }
+    Node* temp = tail;
+    if (!comparePredicate(value, temp->data)){
+        newNode->prev = tail;
+        tail->next = newNode;
+        tail = tail->next;
+        sz++;
+        return;
+    }
+    while (comparePredicate(value, temp->data) && temp->prev != nullptr){
+        temp = temp->prev;
+    }
+    if (temp->prev == nullptr && comparePredicate(value, temp->data)) {
+        newNode->next = head;
+        head->prev = newNode;
+        head = head->prev;
+        sz++;
+        return;
+    }
+    Node* saveNext = temp->next;
+    temp->next = newNode;
+    newNode->prev = temp;
+    newNode->next = saveNext;
+    saveNext->prev = newNode;
+    sz++;
 }
 
 template<typename T>
