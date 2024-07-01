@@ -7,8 +7,8 @@ class myQueue {
         T data;
         Node* next;
         Node* prev;
-        Node();
-        Node(T value);
+        Node() : next(nullptr), prev(nullptr) {}
+        Node(T value) : data(value), next(nullptr), prev(nullptr) {}
         friend class myQueue;
     };
 public:
@@ -28,19 +28,6 @@ private:
     T last;
     myQueue<T>& copy(const myQueue<T>& other);
 };
-
-template<typename T>
-myQueue<T>::Node::Node() {
-    next = nullptr;
-    prev = nullptr;
-}
-
-template<typename T>
-myQueue<T>::Node::Node(T value) {
-    next = nullptr;
-    prev = nullptr;
-    data = value;
-}
 
 template<typename T>
 myQueue<T>::myQueue() {
@@ -66,7 +53,7 @@ void myQueue<T>::push(const T &value) {
     Node* temp = tail;
     temp->next = newNode;
     newNode->prev = temp;
-    tail = newNode;
+    tail = tail->next;
     sz++;
 }
 
@@ -76,22 +63,27 @@ T myQueue<T>::pop() {
     Node* temp = head;
     T t = temp->data;
     head = head->next;
+    if (head != nullptr) {
+        head->prev = nullptr;
+    } else {
+        tail = nullptr;
+    }
     delete temp;
-    head->prev = nullptr;
     sz--;
     return t;
 }
 
 template<typename T>
 T &myQueue<T>::top() {
+    if (sz == 0) {return last;}
     return head->data;
 }
 
 template<typename T>
 T &myQueue<T>::bot() {
+    if (sz == 0) {return last;}
     return tail->data;
 }
-
 
 template<typename T>
 int myQueue<T>::size() {

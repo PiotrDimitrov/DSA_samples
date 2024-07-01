@@ -8,28 +8,21 @@ bool test(int a, int b){
 }
 
 int main() {
-myPrQueue<int> pq;
-    pq.push(4, nullptr);
-
-    pq.push(2, nullptr);
-
-    pq.push(5, nullptr);
-
-    pq.push(11, nullptr);
-
-    pq.push(7, nullptr);
-
-    pq.push(1, nullptr);
-
-    pq.push(8, nullptr);
-
-
-    int s = pq.size();
+    myQueue<int> q;
+    q.push(7); q.push(11); q.push(2);
+    q.push(8); q.push(9); q.push(1);
+    q.push(4); q.push(16);
+    int s = q.size();
+    myQueue<int> nq;
+    nq = q;
+    nq.push(10);
     for (int i = 0; i < s; i++){
-        std::cout << pq.pop() << ' ';
+        std::cout << q.pop() << ' ';
     }
     std::cout << std::endl;
-    std::cout << pq.size() << std::endl;
-    std::cout << "sad";
+    s = nq.size();
+    for (int i = 0; i < s; i++){
+        std::cout << nq.pop() << ' ';
+    }
     return 0;
 }
