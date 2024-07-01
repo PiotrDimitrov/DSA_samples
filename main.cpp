@@ -1,10 +1,6 @@
 #include <iostream>
 #include "header.h"
 
-bool test(int a, int b){
-
-}
-
 int main() {
     myBinTree<int> tr;
     tr.push(7); tr.push(11); tr.push(2);
