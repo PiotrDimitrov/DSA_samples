@@ -25,46 +25,76 @@ public:
     myDeque<T>& operator = (const myDeque<T> other);
     void clear();
     void print();
+    int capacity();
 private:
     int sz;
     int sg;
     int coef;
-    int cap;
+    int _capacity;
+    int lastIndex;
     segment* begin;
     segment* end;
     void addSegment();
+    void removeEnd();
 };
+
+template<typename T>
+int myDeque<T>::size() {
+    return sz;
+}
+
+template<typename T>
+void myDeque<T>::removeEnd() {
+    segment* temp = end;
+    end = end->prev;
+    end->next = nullptr;
+    delete temp;
+}
+
+template<typename T>
+int myDeque<T>::capacity() {
+    return _capacity;
+}
 
 template<typename T>
 void myDeque<T>::pop_back() {
     if (sz == 0) { throw std::out_of_range("empty"); }
-    sz--;
+    if (lastIndex == 0) {
+        removeEnd();
+        lastIndex = end->szg;
+        pop_back();
+    } else {
+        end->isFull = false;
+        lastIndex--;
+        sz--;
+    }
 }
 
 template<typename T>
 void myDeque<T>::print() {
     segment* current = begin;
-    while (current != nullptr) {
+    while (current != end) {
         for (int i = 0; i < current->szg; i++){
             std::cout << current->array[i] << ' ';
         }
         current = current->next;
     }
+    for (int i = 0; i < lastIndex; i++){
+        std::cout << current->array[i] << ' ';
+    }
+    std::cout << std::endl;
 }
 
 template<typename T>
 void myDeque<T>::push_back(const T &value) {
-    segment* current = begin;
-    int index = sz;
-    while (current->next != nullptr) {
-        index -= current->szg;
-    }
-    if (current->isFull){
+    if (end->isFull || end == nullptr){
         addSegment();
-        current = current->next;
+        lastIndex = 0;
     }
-    current->array[index];
-    if (index == current->szg - 1) {current->isFull = true;}
+    end->array[lastIndex] = value;
+    sz++;
+    lastIndex++;
+    if (end->szg == lastIndex) {end->isFull = true;}
 }
 
 template<typename T>
@@ -107,7 +137,7 @@ void myDeque<T>::addSegment() {
     }
     coef++;
     auto newSeg = new segment(coef*sg);
-    cap += coef*sg;
+    _capacity += coef*sg;
     segment* temp = end;
     temp->next = newSeg;
     newSeg->prev = temp;
@@ -125,9 +155,10 @@ myDeque<T>::myDeque(int n) {
     sg = n;
     coef = 1;
     auto newSeg = new segment(coef*sg);
-    cap = coef*sg;
+    _capacity = coef*sg;
     begin = newSeg;
     end = newSeg;
+    lastIndex = 0;
 }
 
 template<typename T>
@@ -136,9 +167,10 @@ myDeque<T>::myDeque() {
     sg = 16;
     coef = 1;
     auto newSeg = new segment(coef*sg);
-    cap = coef*sg;
+    _capacity = coef*sg;
     begin = newSeg;
     end = newSeg;
+    lastIndex = 0;
 }
 
 template<typename T>
