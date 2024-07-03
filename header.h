@@ -7,6 +7,7 @@
 #include "Data_Structures/myPriorityQueue.h"
 #include "Data_Structures/myStack.h"
 #include "Data_Structures/myBinaryTree.h"
+#include "Data_Structures/myDeque.h"
 
 
 #endif //DSA_SAMPLES_HEADER_H

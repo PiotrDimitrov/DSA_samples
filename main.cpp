@@ -2,11 +2,11 @@
 #include "header.h"
 
 int main() {
-    myBinTree<int> tr;
-    tr.push(7); tr.push(11); tr.push(2);
-    tr.push(8); tr.push(9); tr.push(1);
-    tr.push(4); tr.push(16);
-    tr.print();
-    std::cout << tr.findIn(10) << std::endl;
-    return 0;
+    myDeque<int> dq(4);
+    std::cout << 'a';
+    for (int i = 1; i < 50; i+=2){
+        dq.push_back(i);
+        std::cout << '-';
+    }
+    dq.print();
 }
