@@ -95,37 +95,6 @@ myBinTree<T>::~myBinTree() {
 
 template<typename T>
 void myBinTree<T>::push(const T &value) {
-//    Node* newNode = new Node(value);
-//    if (sz == 0) {
-//        begin = newNode;
-//        sz = 1;
-//        return;
-//    }
-//    bool flag;
-//    Node* current = begin;
-//    while (current != nullptr) {
-//        if (value == current->data) {delete newNode; return;}
-//        if (value < current->data){
-//            flag = false;
-//            if (current->left == nullptr){
-//                break;
-//            }
-//            current = current->left;
-//        } else {
-//            flag = true;
-//            if (current->right == nullptr){
-//                break;
-//            }
-//            current = current->right;
-//        }
-//    }
-//    newNode->prev = current;
-//    if (flag) {
-//        current->right = newNode;
-//    } else {
-//        current->left = newNode;
-//    }
-//    sz++;
     Node* newNode = new Node(value);
     if (sz == 0) {
         begin = newNode;
