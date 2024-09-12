@@ -20,6 +20,7 @@ public:
     void clear();
     void print();
     bool findIn(T value);
+    void balance();
 private:
     int sz;
     Node* begin;
@@ -104,7 +105,7 @@ void myBinTree<T>::push(const T &value) {
     Node* current = begin;
     while (true) {
         if (value == current->data) {
-            delete newNode; // Avoid memory leak
+            delete newNode;
             return;
         }
         if (value < current->data) {
@@ -124,6 +125,12 @@ void myBinTree<T>::push(const T &value) {
         }
     }
     sz++;
+}
+
+template <typename T>
+void myBinTree<T>::balance() {
+    T tempContainer = new T[sz];
+    
 }
 
 #endif //DSA_SAMPLES_MYBINARYTREE_H
