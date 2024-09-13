@@ -21,13 +21,44 @@ public:
     void print();
     bool findIn(T value);
     void balance();
+    void description();
 private:
     int sz;
     Node* begin;
+    void dscrptNode(Node* n);
     void clearTree(Node* n);
     void printNode(Node* n);
     void blncPushCntnr(Node* n, T* cntnr, int* index);
 };
+
+template<typename T>
+void myBinTree<T>::dscrptNode(myBinTree::Node *n) {
+    if (n == nullptr) { return;}
+    if (n->left != nullptr && n->right != nullptr){
+        std::cout << n->data << " => ( l: " << n->left->data << " , r: " << n->right->data << " )" << std::endl;
+    }
+    if (n->left != nullptr && n->right == nullptr){
+        std::cout << "    " << n->data << " => ( l: " << n->left->data << " , r: null )" << std::endl;
+    }
+    if (n->left == nullptr && n->right != nullptr){
+        std::cout << "    "  << n->data << " => ( l: null , r: " << n->right->data << " )" << std::endl;
+    }
+    if (n->left == nullptr && n->right == nullptr) {
+        std::cout << "        "  << n->data << " => ( l: null , r: null )" << std::endl;
+    }
+    if (n->left != nullptr){
+        dscrptNode(n->left);
+    }
+    if (n->right != nullptr){
+        dscrptNode(n->right);
+    }
+}
+
+template<typename T>
+void myBinTree<T>::description() {
+    dscrptNode(begin);
+    std::cout << std::endl;
+}
 
 
 template<typename T>

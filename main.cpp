@@ -11,5 +11,5 @@ int main() {
     tree.push(6);
     tree.push(17);
     tree.push(12);
-    tree.balance();
+    tree.description();
 }
