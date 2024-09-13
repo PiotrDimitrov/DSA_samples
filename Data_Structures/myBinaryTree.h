@@ -129,7 +129,7 @@ void myBinTree<T>::push(const T &value) {
 
 template <typename T>
 void myBinTree<T>::balance() {
-    T tempContainer = new T[sz];
+    T* tempContainer = new T[sz];
     
 }
 
