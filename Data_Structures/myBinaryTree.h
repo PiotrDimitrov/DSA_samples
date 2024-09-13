@@ -26,7 +26,9 @@ private:
     Node* begin;
     void clearTree(Node* n);
     void printNode(Node* n);
+    void blncPushCntnr(Node* n, T* cntnr, int* index);
 };
+
 
 template<typename T>
 bool myBinTree<T>::findIn(T value) {
@@ -130,7 +132,26 @@ void myBinTree<T>::push(const T &value) {
 template <typename T>
 void myBinTree<T>::balance() {
     T* tempContainer = new T[sz];
-    
+    int index = 0;
+    blncPushCntnr(begin, tempContainer, &index);
+    for (int i = 0; i < sz; i++){
+        std::cout << tempContainer[i] << " - ";
+    }
+    delete [] tempContainer;
+}
+
+
+template<typename T>
+void myBinTree<T>::blncPushCntnr(myBinTree::Node *n, T *cntnr, int* index) {
+    if (n == nullptr) { return;}
+    if (n->left != nullptr){
+        blncPushCntnr(n->left, cntnr, index);
+    }
+    cntnr[*index] = n->data;
+    (*index)++;
+    if (n->right != nullptr){
+        blncPushCntnr(n->right, cntnr, index);
+    }
 }
 
 #endif //DSA_SAMPLES_MYBINARYTREE_H
