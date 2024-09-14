@@ -21,12 +21,12 @@ public:
     void clear();
     void print();
     bool findIn(T value);
-    void balance();
+    myBinTree<T> balance();
     void description();
 private:
     int sz;
     Node* begin;
-    void blncSubtree(Node* n);
+    myBinTree<T> blncSubtree(Node* n);
     void insertionCntnr(const std::vector<Node*> &v, std::vector<Node*> &cntnr);
     void blncPushCntnr(Node* n, std::vector <Node*> &v);
     std::vector<Node*> firstHalf(const std::vector <Node*> &v);
@@ -73,18 +73,23 @@ std::vector<typename myBinTree<T>::Node*> myBinTree<T>::secondHalf(const std::ve
 }
 
 template<typename T>
-void myBinTree<T>::blncSubtree(myBinTree::Node *n) {
+myBinTree<T> myBinTree<T>::blncSubtree(myBinTree::Node *n) {
+    myBinTree<T> newTree;
     std::vector<Node*> tempContainer;
     blncPushCntnr(n, tempContainer);
-    for (int i = 0; i < sz; i++){
-        std::cout << tempContainer[i] << " = " << tempContainer[i]->data << " , ";
-    }
+//    for (int i = 0; i < sz; i++){
+//        std::cout << tempContainer[i] << " = " << tempContainer[i]->data << " , ";
+//    }
     std::vector<Node*> insertionList;
     insertionCntnr(tempContainer, insertionList);
-    std::cout << std::endl;
+//    std::cout << std::endl;
+//    for (int i = 0; i < sz; i++){
+//        std::cout << insertionList[i] << " = " << insertionList[i]->data << " , ";
+//    }
     for (int i = 0; i < sz; i++){
-        std::cout << insertionList[i] << " = " << insertionList[i]->data << " , ";
+        newTree.push(insertionList[i]->data);
     }
+    return newTree;
 }
 
 template<typename T>
@@ -217,8 +222,8 @@ void myBinTree<T>::push(const T &value) {
 }
 
 template <typename T>
-void myBinTree<T>::balance() {
-    blncSubtree(begin);
+myBinTree<T> myBinTree<T>::balance() {
+    return blncSubtree(begin);
 }
 
 
