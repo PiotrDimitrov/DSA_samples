@@ -16,6 +16,7 @@ class myBinTree {
     };
 public:
     myBinTree();
+    myBinTree(const myBinTree<T>& other);
     ~myBinTree();
     void push(const T& value);
     void clear();
@@ -23,6 +24,7 @@ public:
     bool findIn(T value);
     myBinTree<T> balance();
     void description();
+    myBinTree<T>& operator = (const myBinTree<T>& other);
 private:
     int sz;
     Node* begin;
@@ -34,8 +36,50 @@ private:
     void dscrptNode(Node* n);
     void clearTree(Node* n);
     void printNode(Node* n);
+    Node* copyNode(Node* other);
 
 };
+
+template<typename T>
+myBinTree<T>::myBinTree(const myBinTree<T> &other) : sz(0), begin(nullptr) {
+    if (other.begin != nullptr) {
+        begin = copyNode(other.begin);
+        sz = other.sz;
+    }
+}
+
+template<typename T>
+myBinTree<T>::Node* myBinTree<T>::copyNode(myBinTree::Node* other) {
+    if (other == nullptr){
+        return nullptr;
+    }
+    Node* newNode = new Node(other->data);
+    newNode->left = copyNode(other->left);
+    newNode->right = copyNode(other->right);
+    if (newNode->left != nullptr) {
+        newNode->left->prev = newNode;
+    }
+    if (newNode->right != nullptr) {
+        newNode->right->prev = newNode;
+    }
+    return newNode;
+}
+
+
+template<typename T>
+myBinTree<T> &myBinTree<T>::operator = (const myBinTree<T> &other) {
+    if (this == &other) {
+        return *this;
+    }
+    if (this->begin != nullptr) {
+        this->clear();
+    }
+    if (other.begin != nullptr) {
+        begin = copyNode(other.begin);
+        sz = other.sz;
+    }
+    return *this;
+}
 
 template<typename T>
 void myBinTree<T>::insertionCntnr(const std::vector<Node *> &v, std::vector<Node *> &cntnr) {
