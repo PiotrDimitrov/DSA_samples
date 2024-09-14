@@ -1,6 +1,7 @@
 #ifndef DSA_SAMPLES_MYBINARYTREE_H
 #define DSA_SAMPLES_MYBINARYTREE_H
 #include <iostream>
+#include <vector>
 template <typename T>
 class myBinTree {
     class Node {
@@ -20,16 +21,50 @@ public:
     void clear();
     void print();
     bool findIn(T value);
-    void balance();
+    void balance(Node* n);
     void description();
 private:
     int sz;
     Node* begin;
+    void voidBlncSubtree(Node* n);
+    void blncPushCntnr(Node* n, std::vector <Node*> &v);
+    std::vector<Node*> firstHalf(const std::vector <Node*> &v);
+    std::vector<Node*> secondHalf(const std::vector <Node*> &v);
     void dscrptNode(Node* n);
     void clearTree(Node* n);
     void printNode(Node* n);
-    void blncPushCntnr(Node* n, T* cntnr, int* index);
+
 };
+
+template<typename T>
+std::vector<typename myBinTree<T>::Node*> myBinTree<T>::secondHalf(const std::vector<Node *> &v) {
+    int end = v.size() / 2;
+    std::vector<Node*> result;
+    for (int i = 0; i < end; i++){
+        result.push_back(v[i]);
+    }
+    return result;
+}
+
+template<typename T>
+std::vector<typename myBinTree<T>::Node*> myBinTree<T>::firstHalf(const std::vector<Node *> &v) {
+    int begin = v.size() / 2 + 1;
+    std::vector<Node*> result;
+    for (int i = begin; i < v.size(); i++){
+        result.push_back(v[i]);
+    }
+    return result;
+}
+
+template<typename T>
+void myBinTree<T>::voidBlncSubtree(myBinTree::Node *n) {
+    std::vector<Node*> tempContainer;
+    blncPushCntnr(n, tempContainer);
+    for (int i = 0; i < sz; i++){
+        std::cout << tempContainer[i] << " - ";
+    }
+    delete [] tempContainer;
+}
 
 template<typename T>
 void myBinTree<T>::dscrptNode(myBinTree::Node *n) {
@@ -161,10 +196,9 @@ void myBinTree<T>::push(const T &value) {
 }
 
 template <typename T>
-void myBinTree<T>::balance() {
-    T* tempContainer = new T[sz];
-    int index = 0;
-    blncPushCntnr(begin, tempContainer, &index);
+void myBinTree<T>::balance(Node* n) {
+    std::vector<Node*> tempContainer;
+    blncPushCntnr(n, tempContainer);
     for (int i = 0; i < sz; i++){
         std::cout << tempContainer[i] << " - ";
     }
@@ -173,15 +207,14 @@ void myBinTree<T>::balance() {
 
 
 template<typename T>
-void myBinTree<T>::blncPushCntnr(myBinTree::Node *n, T *cntnr, int* index) {
+void myBinTree<T>::blncPushCntnr(myBinTree::Node *n, std::vector <Node*> &v) {
     if (n == nullptr) { return;}
     if (n->left != nullptr){
-        blncPushCntnr(n->left, cntnr, index);
+        blncPushCntnr(n->left, v);
     }
-    cntnr[*index] = n->data;
-    (*index)++;
+    v.push_back(n->data);
     if (n->right != nullptr){
-        blncPushCntnr(n->right, cntnr, index);
+        blncPushCntnr(n->right, v);
     }
 }
 
