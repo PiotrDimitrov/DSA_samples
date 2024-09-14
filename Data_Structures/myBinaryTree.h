@@ -202,16 +202,13 @@ void myBinTree<T>::print() {
 template<typename T>
 void myBinTree<T>::clearTree(Node* n) {
     if (n == nullptr) { return;}
-    if (n->left == nullptr && n->right == nullptr){
-        delete n;
-        return;
-    }
     if (n->left != nullptr){
         clearTree(n->left);
     }
     if (n->right != nullptr){
         clearTree(n->right);
     }
+    delete n;
 }
 
 template<typename T>
