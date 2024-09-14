@@ -12,4 +12,5 @@ int main() {
     tree.push(17);
     tree.push(12);
     tree.description();
+    tree.balance();
 }
