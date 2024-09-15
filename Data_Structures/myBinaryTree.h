@@ -256,29 +256,27 @@ myBinTree<T>::~myBinTree() {
 
 template<typename T>
 void myBinTree<T>::push(const T &value) {
-    Node* newNode = new Node(value);
     if (sz == 0) {
-        begin = newNode;
+        begin = new Node(value);
         sz = 1;
         return;
     }
     Node* current = begin;
     while (true) {
         if (value == current->data) {
-            delete newNode;
             return;
         }
         if (value < current->data) {
             if (current->left == nullptr) {
-                current->left = newNode;
-                newNode->prev = current;
+                current->left = new Node(value);
+                current->left->prev = current;
                 break;
             }
             current = current->left;
         } else {
             if (current->right == nullptr) {
-                current->right = newNode;
-                newNode->prev = current;
+                current->right = new Node(value);
+                current->right->prev = current;
                 break;
             }
             current = current->right;
@@ -286,6 +284,7 @@ void myBinTree<T>::push(const T &value) {
     }
     sz++;
 }
+
 
 template <typename T>
 myBinTree<T> myBinTree<T>::balance() {
