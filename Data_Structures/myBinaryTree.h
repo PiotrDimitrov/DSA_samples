@@ -22,10 +22,12 @@ public:
     void clear();
     void print();
     bool findIn(T value);
+    bool isFull();
     myBinTree<T> balance();
     void description();
     myBinTree<T>& operator = (const myBinTree<T>& other);
 private:
+    bool checkFullNode(Node* n);
     int sz;
     Node* begin;
     myBinTree<T> blncSubtree(Node* n);
@@ -39,6 +41,26 @@ private:
     Node* copyNode(Node* other);
 
 };
+
+template<typename T>
+bool myBinTree<T>::checkFullNode(myBinTree::Node *n) {
+    if ((n->left == nullptr && n->right != nullptr) || (n->right == nullptr && n->left != nullptr)) {
+        return false;
+    }
+    bool result;
+    if (n->left != nullptr){
+        result = checkFullNode(n->left);
+    }
+    if (n->right != nullptr){
+        result = result && checkFullNode(n->right);
+    }
+    return result;
+}
+
+template<typename T>
+bool myBinTree<T>::isFull() {
+    return checkFullNode(begin);
+}
 
 template<typename T>
 myBinTree<T>::myBinTree(const myBinTree<T> &other) : sz(0), begin(nullptr) {
