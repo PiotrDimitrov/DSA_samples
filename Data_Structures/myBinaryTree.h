@@ -37,7 +37,6 @@ private:
     void clearTree(Node* n);
     void printNode(Node* n);
     Node* copyNode(Node* other);
-
 };
 
 template<typename T>
@@ -84,44 +83,17 @@ typename myBinTree<T>::Node* myBinTree<T>::copyNode(myBinTree::Node* other) {
     return newNode;
 }
 
-
 template<typename T>
 myBinTree<T> &myBinTree<T>::operator = (const myBinTree<T> &other) {
     if (this == &other) {
         return *this;
     }
-
     clear();
-
     if (other.begin != nullptr) {
         begin = copyNode(other.begin);
         sz = other.sz;
     }
     return *this;
-}
-
-template<typename T>
-void myBinTree<T>::insertionCntnr(const std::vector<Node *> &v, std::vector<Node *> &cntnr) {
-    cntnr.push_back(v[v.size() / 2]);
-    if (v.size() > 1) {
-        insertionCntnr(std::vector<Node*>(v.begin(), v.begin() + v.size() / 2), cntnr);
-    }
-    if (v.size() > 2) {
-        insertionCntnr(std::vector<Node*>(v.begin() + v.size() / 2 + 1, v.end()), cntnr);
-    }
-}
-
-template<typename T>
-myBinTree<T> myBinTree<T>::blncSubtree(myBinTree::Node *n) {
-    myBinTree<T> newTree;
-    std::vector<Node*> tempContainer;
-    blncPushCntnr(n, tempContainer);
-    std::vector<Node*> insertionList;
-    insertionCntnr(tempContainer, insertionList);
-    for (int i = 0; i < sz; i++){
-        newTree.push(insertionList[i]->data);
-    }
-    return newTree;
 }
 
 template<typename T>
@@ -152,7 +124,6 @@ void myBinTree<T>::description() const {
     dscrptNode(begin);
     std::cout << std::endl;
 }
-
 
 template<typename T>
 bool myBinTree<T>::findIn(T value) const {
@@ -250,12 +221,10 @@ void myBinTree<T>::push(const T &value) {
     sz++;
 }
 
-
 template <typename T>
 myBinTree<T> myBinTree<T>::balance() {
     return blncSubtree(begin);
 }
-
 
 template<typename T>
 void myBinTree<T>::blncPushCntnr(myBinTree::Node* n, std::vector <Node*> &v) {
@@ -266,6 +235,30 @@ void myBinTree<T>::blncPushCntnr(myBinTree::Node* n, std::vector <Node*> &v) {
     v.push_back(n);
     if (n->right != nullptr){
         blncPushCntnr(n->right, v);
+    }
+}
+
+template<typename T>
+myBinTree<T> myBinTree<T>::blncSubtree(myBinTree::Node *n) {
+    myBinTree<T> newTree;
+    std::vector<Node*> tempContainer;
+    blncPushCntnr(n, tempContainer);
+    std::vector<Node*> insertionList;
+    insertionCntnr(tempContainer, insertionList);
+    for (int i = 0; i < sz; i++){
+        newTree.push(insertionList[i]->data);
+    }
+    return newTree;
+}
+
+template<typename T>
+void myBinTree<T>::insertionCntnr(const std::vector<Node *> &v, std::vector<Node *> &cntnr) {
+    cntnr.push_back(v[v.size() / 2]);
+    if (v.size() > 1) {
+        insertionCntnr(std::vector<Node*>(v.begin(), v.begin() + v.size() / 2), cntnr);
+    }
+    if (v.size() > 2) {
+        insertionCntnr(std::vector<Node*>(v.begin() + v.size() / 2 + 1, v.end()), cntnr);
     }
 }
 
