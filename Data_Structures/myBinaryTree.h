@@ -33,8 +33,6 @@ private:
     myBinTree<T> blncSubtree(Node* n);
     void insertionCntnr(const std::vector<Node*> &v, std::vector<Node*> &cntnr);
     void blncPushCntnr(Node* n, std::vector <Node*> &v);
-    std::vector<Node*> firstHalf(const std::vector <Node*> &v);
-    std::vector<Node*> secondHalf(const std::vector <Node*> &v);
     void dscrptNode(Node* n);
     void clearTree(Node* n);
     void printNode(Node* n);
@@ -106,45 +104,12 @@ template<typename T>
 void myBinTree<T>::insertionCntnr(const std::vector<Node *> &v, std::vector<Node *> &cntnr) {
     cntnr.push_back(v[v.size() / 2]);
     if (v.size() > 1) {
-        insertionCntnr(firstHalf(v), cntnr);
+        insertionCntnr(std::vector<Node*>(v.begin(), v.begin() + v.size() / 2), cntnr);
     }
     if (v.size() > 2) {
-        insertionCntnr(secondHalf(v), cntnr);
+        insertionCntnr(std::vector<Node*>(v.begin() + v.size() / 2 + 1, v.end()), cntnr);
     }
 }
-
-//template<typename T>
-//std::vector<typename myBinTree<T>::Node*> myBinTree<T>::firstHalf(const std::vector<Node *> &v) {
-//    if (v.size() <= 1) {return std::vector<Node*>();}
-//    int end = v.size() / 2;
-//    std::vector<Node*> result;
-//    for (int i = 0; i < end; i++){
-//        result.push_back(v[i]);
-//    }
-//    return result;
-//}
-//
-//template<typename T>
-//std::vector<typename myBinTree<T>::Node*> myBinTree<T>::secondHalf(const std::vector<Node *> &v) {
-//    if (v.size() <= 2) {return std::vector<Node*>();}
-//    int begin = v.size() / 2 + 1;
-//    std::vector<Node*> result;
-//    for (int i = begin; i < v.size(); i++){
-//        result.push_back(v[i]);
-//    }
-//    return result;
-//}
-
-template<typename T>
-std::vector<typename myBinTree<T>::Node*> myBinTree<T>::firstHalf(const std::vector<Node *> &v) {
-    return std::vector<Node*>(v.begin(), v.begin() + v.size() / 2);
-}
-
-template<typename T>
-std::vector<typename myBinTree<T>::Node*> myBinTree<T>::secondHalf(const std::vector<Node *> &v) {
-    return std::vector<Node*>(v.begin() + v.size() / 2 + 1, v.end());
-}
-
 
 template<typename T>
 myBinTree<T> myBinTree<T>::blncSubtree(myBinTree::Node *n) {
