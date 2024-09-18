@@ -21,13 +21,15 @@ public:
     void push(const T& value);
     void deleteValue(T value);
     void clear();
-    void print() const;
+    void preOrderPrint() const;
+    void graphicPrint() const;
     bool findIn(T value) const;
     bool isFull() const;
     myBinTree<T> balance();
     void description() const;
     myBinTree<T>& operator = (const myBinTree<T>& other);
 private:
+    void graphPrintNode(Node* n, int lvl) const;
     Node* findMax(Node* n);
     Node* findMin(Node* n);
     void deleteNode(Node* n);
@@ -42,6 +44,22 @@ private:
     void printNode(Node* n) const;
     Node* copyNode(Node* other);
 };
+
+template<typename T>
+void myBinTree<T>::graphPrintNode(myBinTree::Node* n, int lvl) const {
+    if (n == nullptr) { return;}
+    graphPrintNode(n->right, lvl+1);
+    for (int i = 0; i < lvl; i++){
+            std::cout << "    ";
+    }
+    std::cout << n->data << std::endl;
+    graphPrintNode(n->left, lvl+1);
+}
+
+template<typename T>
+void myBinTree<T>::graphicPrint() const {
+graphPrintNode(begin, 0);
+}
 
 template<typename T>
 typename myBinTree<T>::Node* myBinTree<T>::findMin(myBinTree::Node *n) {
@@ -258,7 +276,7 @@ void myBinTree<T>::printNode(myBinTree::Node *n) const{
 }
 
 template<typename T>
-void myBinTree<T>::print() const {
+void myBinTree<T>::preOrderPrint() const {
     printNode(begin);
     std::cout << std::endl;
 }
