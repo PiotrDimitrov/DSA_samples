@@ -4,11 +4,14 @@
 int main() {
     myBinTree<int> tree;
 
-    for (int i = 1; i <= 6; i++){
+    for (int i = 1; i <= 15; i++){
         tree.push(i);
     }
     tree.description();
     myBinTree<int> balTree = tree.balance();
     balTree.description();
-    std::cout << balTree.isFull() << std::endl;
+    balTree.deleteValue(4);
+    //balTree.deleteValue(7);
+    //balTree.deleteValue(5);
+    balTree.description();
 }

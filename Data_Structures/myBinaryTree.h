@@ -19,6 +19,7 @@ public:
     myBinTree(const myBinTree<T>& other);
     ~myBinTree();
     void push(const T& value);
+    void deleteValue(T value);
     void clear();
     void print() const;
     bool findIn(T value) const;
@@ -27,17 +28,140 @@ public:
     void description() const;
     myBinTree<T>& operator = (const myBinTree<T>& other);
 private:
+    Node* findMax(Node* n);
+    Node* findMin(Node* n);
+    void deleteNode(Node* n);
     bool checkFullNode(Node* n) const;
     int sz;
     Node* begin;
     myBinTree<T> blncSubtree(Node* n);
     void insertionCntnr(const std::vector<Node*> &v, std::vector<Node*> &cntnr);
     void blncPushCntnr(Node* n, std::vector <Node*> &v);
-    void dscrptNode(Node* n);
+    void dscrptNode(Node* n) const;
     void clearTree(Node* n);
     void printNode(Node* n);
     Node* copyNode(Node* other);
 };
+
+template<typename T>
+typename myBinTree<T>::Node* myBinTree<T>::findMin(myBinTree::Node *n) {
+    Node* res = n;
+    while(res->left != nullptr) {
+        res = res->left;
+    }
+    return res;
+}
+
+template<typename T>
+typename myBinTree<T>::Node* myBinTree<T>::findMax(myBinTree::Node *n) {
+    Node* res = n;
+    while(res->right != nullptr) {
+        res = res->right;
+    }
+    return res;
+}
+
+template<typename T>
+void myBinTree<T>::deleteNode(myBinTree::Node *n) {
+
+    if (n->left == nullptr && n->right == nullptr) {
+        if (n->prev != nullptr) {
+            Node* temp = n->prev;
+            if (temp->left == n){
+                temp->left = nullptr;
+                delete n;
+                return;
+            } else if (temp->right == n){
+                temp->right = nullptr;
+                delete n;
+                return;
+            } else {
+                return;
+            }
+        } else {
+            return;
+        }
+    }
+
+    if (n->left != nullptr && n->right == nullptr) {
+        if (n->prev != nullptr){
+            Node* temp = n->prev;
+            if (temp->left == n){
+                temp->left = n->left;
+                delete n;
+                return;
+            } else if (temp->right == n){
+                temp->right = n->left;
+                delete n;
+                return;
+            }
+        } else {
+            return;
+        }
+    }
+    if (n->left == nullptr && n->right != nullptr) {
+        if (n->prev != nullptr){
+            Node* temp = n->prev;
+            if (temp->left == n){
+                temp->left = n->right;
+                delete n;
+                return;
+            } else if (temp->right == n){
+                temp->right = n->right;
+                delete n;
+                return;
+            }
+        } else {
+            return;
+        }
+    }
+
+    if (n->left != nullptr && n->right != nullptr) {
+        Node* goal = findMin(n->right);
+        n->data = goal->data;
+        deleteNode(goal);
+    }
+}
+
+template<typename T>
+void myBinTree<T>::deleteValue(T value) {
+    if (begin == nullptr) { return;}
+    Node* current = begin;
+    while (current->data != value) {
+        if (current == nullptr) { return;}
+        if (value < current->data) {current = current->left; continue;}
+        if (value > current->data) {current = current->right;}
+    }
+    deleteNode(current);
+//    if (current->right == nullptr && current->left == nullptr){
+//        Node* temp = current->prev;
+//        if (temp->left == current) {temp->left = nullptr;}
+//        else {temp->right = nullptr;}
+//        delete current;
+//        return;
+//    }
+//
+//    if (current->left != nullptr && current->right == nullptr) {
+//        Node* temp = current->prev;
+//        if (temp->left == current) {temp->left = current->left;}
+//        else {temp->right = current->left;}
+//        delete current;
+//        return;
+//    }
+//    if (current->left == nullptr && current->right != nullptr) {
+//        Node* temp = current->prev;
+//        if (temp->left == current) {temp->left = current->right;}
+//        else {temp->right = current->right;}
+//        delete current;
+//        return;
+//    }
+//
+//    if (current->right != nullptr && current->left != nullptr){
+//
+//        return;
+//    }
+
+}
 
 template<typename T>
 bool myBinTree<T>::checkFullNode(myBinTree::Node *n) const{
@@ -97,7 +221,7 @@ myBinTree<T> &myBinTree<T>::operator = (const myBinTree<T> &other) {
 }
 
 template<typename T>
-void myBinTree<T>::dscrptNode(myBinTree::Node *n) {
+void myBinTree<T>::dscrptNode(myBinTree::Node *n) const{
     if (n == nullptr) { return;}
     if (n->left != nullptr && n->right != nullptr){
         std::cout << n->data << " => ( l: " << n->left->data << " , r: " << n->right->data << " )" << std::endl;
