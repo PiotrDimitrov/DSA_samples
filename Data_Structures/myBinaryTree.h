@@ -39,7 +39,7 @@ private:
     void blncPushCntnr(Node* n, std::vector <Node*> &v);
     void dscrptNode(Node* n) const;
     void clearTree(Node* n);
-    void printNode(Node* n);
+    void printNode(Node* n) const;
     Node* copyNode(Node* other);
 };
 
@@ -63,6 +63,10 @@ typename myBinTree<T>::Node* myBinTree<T>::findMax(myBinTree::Node *n) {
 
 template<typename T>
 void myBinTree<T>::deleteNode(myBinTree::Node *n) {
+
+    if (n == nullptr) {
+        return;
+    }
 
     if (n->left == nullptr && n->right == nullptr) {
         if (n->prev != nullptr) {
@@ -133,38 +137,14 @@ void myBinTree<T>::deleteValue(T value) {
         if (value > current->data) {current = current->right;}
     }
     deleteNode(current);
-//    if (current->right == nullptr && current->left == nullptr){
-//        Node* temp = current->prev;
-//        if (temp->left == current) {temp->left = nullptr;}
-//        else {temp->right = nullptr;}
-//        delete current;
-//        return;
-//    }
-//
-//    if (current->left != nullptr && current->right == nullptr) {
-//        Node* temp = current->prev;
-//        if (temp->left == current) {temp->left = current->left;}
-//        else {temp->right = current->left;}
-//        delete current;
-//        return;
-//    }
-//    if (current->left == nullptr && current->right != nullptr) {
-//        Node* temp = current->prev;
-//        if (temp->left == current) {temp->left = current->right;}
-//        else {temp->right = current->right;}
-//        delete current;
-//        return;
-//    }
-//
-//    if (current->right != nullptr && current->left != nullptr){
-//
-//        return;
-//    }
-
+    sz--;
 }
 
 template<typename T>
 bool myBinTree<T>::checkFullNode(myBinTree::Node *n) const{
+    if (n == nullptr) {
+        return true;
+    }
     if ((n->left == nullptr && n->right != nullptr) || (n->right == nullptr && n->left != nullptr)) {
         return false;
     }
@@ -266,7 +246,7 @@ bool myBinTree<T>::findIn(T value) const {
 }
 
 template<typename T>
-void myBinTree<T>::printNode(myBinTree::Node *n) {
+void myBinTree<T>::printNode(myBinTree::Node *n) const{
     if (n == nullptr) { return;}
     if (n->left != nullptr){
         printNode(n->left);
