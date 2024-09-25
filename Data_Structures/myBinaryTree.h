@@ -149,11 +149,24 @@ template<typename T>
 void myBinTree<T>::deleteValue(T value) {
     if (begin == nullptr) { return;}
     Node* current = begin;
-    while (current->data != value) {
-        if (current == nullptr) { return;}
-        if (value < current->data) {current = current->left; continue;}
-        if (value > current->data) {current = current->right;}
+
+//    while (current->data != value) {
+//        if (current == nullptr) { return;}
+//        if (value < current->data) {current = current->left; continue;}
+//        if (value > current->data) {current = current->right;}
+//    }
+
+    while (current != nullptr && current->data != value) {
+        if (value < current->data) {
+            current = current->left;
+        } else {
+            current = current->right;
+        }
     }
+    if (current == nullptr) {
+        return;
+    }
+
     deleteNode(current);
     sz--;
 }
