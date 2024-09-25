@@ -94,12 +94,8 @@ typename myBinTree<T>::Node* myBinTree<T>::findMax(myBinTree::Node *n) {
 
 template<typename T>
 void myBinTree<T>::deleteNode(myBinTree::Node *n) {
-
-    if (n == nullptr) {
-        return;
-    }
-
-    if (n->left == nullptr && n->right == nullptr) {
+    if (n == nullptr) return;
+    if (!n->left && !n->right) {
         if (n->prev != nullptr) {
             Node* temp = n->prev;
             if (temp->left == n){
@@ -110,52 +106,52 @@ void myBinTree<T>::deleteNode(myBinTree::Node *n) {
                 temp->right = nullptr;
                 delete n;
                 return;
-            } else {
-                return;
-            }
-        } else {
-            return;
-        }
+            } else return;
+        } else return;
     }
-
-    if (n->left != nullptr && n->right == nullptr) {
-        if (n->prev != nullptr){
+    else if (!n->left || !n->right) {
+        if (n->prev){
             Node* temp = n->prev;
+            Node* child = n->left ? n->left : n->right;
             if (temp->left == n){
-                temp->left = n->left;
+                temp->left = child;
                 delete n;
                 return;
             } else if (temp->right == n){
-                temp->right = n->left;
+                temp->right = child;
                 delete n;
                 return;
             }
-        } else {
-            return;
-        }
+        } else return;
     }
-    if (n->left == nullptr && n->right != nullptr) {
-        if (n->prev != nullptr){
-            Node* temp = n->prev;
-            if (temp->left == n){
-                temp->left = n->right;
-                delete n;
-                return;
-            } else if (temp->right == n){
-                temp->right = n->right;
-                delete n;
-                return;
-            }
-        } else {
-            return;
-        }
-    }
-
-    if (n->left != nullptr && n->right != nullptr) {
+    else if (n->left != nullptr && n->right != nullptr) {
         Node* goal = findMin(n->right);
         n->data = goal->data;
         deleteNode(goal);
     }
+//    if (!n->left && !n->right) {  // No children
+//        if (n == begin) {  // Root node
+//            delete n;
+//            begin = nullptr;
+//        } else {
+//            (n->prev->left == n ? n->prev->left : n->prev->right) = nullptr;
+//            delete n;
+//        }
+//    } else if (!n->left || !n->right) {  // One child
+//        Node* child = n->left ? n->left : n->right;
+//        if (n == begin) {  // Root node
+//            begin = child;
+//            child->prev = nullptr;
+//        } else {
+//            (n->prev->left == n ? n->prev->left : n->prev->right) = child;
+//            child->prev = n->prev;
+//        }
+//        delete n;
+//    } else {  // Two children
+//        Node* minRight = findMin(n->right);
+//        n->data = minRight->data;
+//        deleteNode(minRight);
+//    }
 }
 
 template<typename T>
