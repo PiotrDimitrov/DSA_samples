@@ -28,7 +28,9 @@ public:
     myBinTree<T> balance();
     void description() const;
     myBinTree<T>& operator = (const myBinTree<T>& other);
+    int size() const;
 private:
+    int getSize(Node* n) const;
     void graphPrintNode(Node* n, int lvl) const;
     Node* findMax(Node* n);
     Node* findMin(Node* n);
@@ -44,6 +46,17 @@ private:
     void printNode(Node* n) const;
     Node* copyNode(Node* other);
 };
+
+template<typename T>
+int myBinTree<T>::getSize(myBinTree::Node *n) const {
+    if (n == nullptr) {return 0;}
+    return 1 + getSize(n->left) + getSize(n->right);
+}
+
+template<typename T>
+int myBinTree<T>::size() const {
+    return sz;
+}
 
 template<typename T>
 void myBinTree<T>::graphPrintNode(myBinTree::Node* n, int lvl) const {
