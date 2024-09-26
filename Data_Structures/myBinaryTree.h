@@ -129,41 +129,12 @@ void myBinTree<T>::deleteNode(myBinTree::Node *n) {
         n->data = goal->data;
         deleteNode(goal);
     }
-//    if (!n->left && !n->right) {  // No children
-//        if (n == begin) {  // Root node
-//            delete n;
-//            begin = nullptr;
-//        } else {
-//            (n->prev->left == n ? n->prev->left : n->prev->right) = nullptr;
-//            delete n;
-//        }
-//    } else if (!n->left || !n->right) {  // One child
-//        Node* child = n->left ? n->left : n->right;
-//        if (n == begin) {  // Root node
-//            begin = child;
-//            child->prev = nullptr;
-//        } else {
-//            (n->prev->left == n ? n->prev->left : n->prev->right) = child;
-//            child->prev = n->prev;
-//        }
-//        delete n;
-//    } else {  // Two children
-//        Node* minRight = findMin(n->right);
-//        n->data = minRight->data;
-//        deleteNode(minRight);
-//    }
 }
 
 template<typename T>
 void myBinTree<T>::deleteValue(T value) {
     if (begin == nullptr) { return;}
     Node* current = begin;
-
-//    while (current->data != value) {
-//        if (current == nullptr) { return;}
-//        if (value < current->data) {current = current->left; continue;}
-//        if (value > current->data) {current = current->right;}
-//    }
 
     while (current != nullptr && current->data != value) {
         if (value < current->data) {
