@@ -15,4 +15,5 @@ add_executable(DSA_samples main.cpp
         Data_Structures/myBinaryTree.h
         Data_Structures/myDeque.h
         Data_Structures/myString.h
+        Data_Structures/myAVLtree.h
 )

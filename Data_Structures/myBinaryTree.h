@@ -5,13 +5,12 @@
 template <typename T>
 class myBinTree {
     class Node {
-        bool isEmpty;
         T data;
         Node* left;
         Node* right;
         Node* prev;
-        Node() : left(nullptr), right(nullptr), prev(nullptr), isEmpty(true) {};
-        Node(T value) : left(nullptr), right(nullptr), prev(nullptr), isEmpty(false), data(value) {};
+        Node() : left(nullptr), right(nullptr), prev(nullptr) {};
+        Node(T value) : left(nullptr), right(nullptr), prev(nullptr),  data(value) {};
         friend class myBinTree;
     };
 public:
